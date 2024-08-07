@@ -13,9 +13,10 @@ import { Link } from 'react-router-dom'
 import { API_KEY, value_converter } from '../../data'
 
 
-const Feed = ({category}) => {
+const Feed = ({category, searchedText, setSearchText}) => {
 
     const [data , setData] = React.useState([])
+   
 
     const fetchData = async () =>{
         const videoList_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=US&videoCategoryId=${category}&key=${API_KEY}`
@@ -28,7 +29,10 @@ const Feed = ({category}) => {
   return ( 
     <div className='feed'>
         {
-            data.map((item,index )=>{
+            data.filter((item)=>{
+                return searchedText?.toLowerCase() === "" ?
+                item : item.snippet?.title?.toLowerCase().includes(searchedText)
+            }).map((item,index )=>{
                 return(
                 <Link to={`video/${item.snippet.categoryId}/${item.id}`} className='card'>
                     <img src={item.snippet.thumbnails.medium.url} alt=''/>

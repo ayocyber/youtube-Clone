@@ -9,7 +9,8 @@ import notification_icon from "../../assets/notification.png"
 import profile_icon from "../../assets/jack.png"
 import { Link } from 'react-router-dom'
 
-const Navbar = ({setSidebar}) => {
+const Navbar = ({setSidebar ,  searchedText ,setSearchText }) => {
+  
   return (
     <nav className='flex-div'>
       <div className='nav-left flex-div'>
@@ -19,7 +20,12 @@ const Navbar = ({setSidebar}) => {
 
       <div className='nav-middle flex-div'>
         <div className="search-box flex-div">
-            <input type='text' placeholder='Search'/>
+            <input 
+            type='text' 
+            placeholder='Search'
+            value={searchedText}
+            onChange={(e)=>setSearchText(e.target.value)}
+            />
             <img src={search_icon} alt=''/>
         </div>
       </div>

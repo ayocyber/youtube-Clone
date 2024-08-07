@@ -11,7 +11,7 @@ import thumbnail8 from "../../assets/thumbnail8.png"
 import { API_KEY, value_converter } from '../../data'
 import { Link } from 'react-router-dom'
 
-const Recomended = ({categoryId}) => {
+const Recomended = ({categoryId, searchedText}) => {
 
   const [apidata , setApidata] = React.useState([])
 
@@ -27,7 +27,10 @@ const Recomended = ({categoryId}) => {
   return (
     <div className='recommended'>
       {
-        apidata.map((item , index)=>{
+        apidata.filter((item)=>{
+          return searchedText?.toLowerCase() === "" ?
+          item : item.snippet?.title?.toLowerCase().includes(searchedText)
+        }).map((item , index)=>{
           return(
             <Link to={`/video/${item.snippet.categoryId}/${item.id}`} key={index} className='side-video-list'>
             <img src={item.snippet.thumbnails.medium.url} alt=''/>
